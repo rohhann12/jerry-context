@@ -1,0 +1,24 @@
+{
+  "name": "org-memory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Private shared memory for Codex and Claude work history",
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "dev": "node scripts/build.ts && (node scripts/build.ts --watch & node --env-file-if-exists=.env --watch src/server/server.ts)",
+    "start": "node scripts/build.ts && node --env-file-if-exists=.env src/server/server.ts",
+    "connector": "node src/connector/connector.ts",
+    "typecheck": "tsc",
+    "test": "node --test 'test/**/*.test.ts'",
+    "diagram": "node scripts/generate-architecture-diagram.ts"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

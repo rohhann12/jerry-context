@@ -1,0 +1,32 @@
+{
+  "display_information": {
+    "name": "Org Memory Context",
+    "description": "Private, evidence-backed context from your imported work history",
+    "background_color": "#174f39"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "Org Memory",
+      "always_online": false
+    },
+    "slash_commands": [
+      {
+        "command": "/context",
+        "url": "https://YOUR_HOST/api/slack/context",
+        "description": "Ask your private organizational memory",
+        "usage_hint": "what did I work on this week?",
+        "should_escape": true
+      }
+    ]
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": ["commands", "users:read", "users:read.email"]
+    }
+  },
+  "settings": {
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

@@ -1,0 +1,477 @@
+.remote-connector {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.remote-connector > small {
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  font-weight: 800;
+}
+.remote-connector p { font-size: 12px; }
+.remote-connector button {
+  border: 1px solid var(--green);
+  background: transparent;
+  color: var(--green);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.remote-connector code {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background: #eeece4;
+  border-radius: 8px;
+  font-size: 10px;
+  word-break: break-all;
+}
+
+/* The sidebar is position:fixed, so it does not participate in grid layout.
+   Keep the application shell block-based and explicitly reserve its width. */
+.app-shell {
+  display: block;
+}
+
+.workspace {
+  width: calc(100% - 245px);
+  margin-left: 245px;
+  overflow-x: hidden;
+}
+
+.view,
+.work-list,
+.work-row,
+.work-row > * {
+  min-width: 0;
+}
+
+.work-list {
+  width: 100%;
+  container-type: inline-size;
+}
+
+.work-row {
+  grid-template-columns: 42px minmax(0, 1fr) minmax(100px, 180px) 105px;
+}
+
+.work-row > div:nth-child(2) {
+  overflow: hidden;
+}
+
+.work-row .tag {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.work-row > small:last-child {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.results {
+  width: 100%;
+  min-height: 80px;
+}
+
+.answer-panel {
+  max-width: 680px;
+  margin: 26px auto 0;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: #eef3e8;
+  border: 1px solid #d5dfc8;
+  text-align: left;
+}
+
+.dashboard-ask {
+  margin: 18px 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.dashboard-ask > div:first-child {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dashboard-ask h3 {
+  margin: 0;
+  font: 500 26px Georgia, serif;
+}
+
+#dashboard-search-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+#dashboard-search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  outline: none;
+}
+
+.dashboard-search.has-conversation #dashboard-search-form {
+  width: min(100%, 820px);
+  margin: 18px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.dashboard-search.has-conversation #dashboard-search-form input {
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(31,46,36,.06);
+}
+
+.dashboard-ask .answer-panel {
+  max-width: none;
+}
+
+.memory-thread {
+  max-width: 820px;
+  margin: 30px auto 0;
+  text-align: left;
+}
+
+.memory-thread-messages {
+  display: grid;
+  gap: 14px;
+}
+
+.memory-message {
+  width: min(88%, 720px);
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.memory-message.user {
+  justify-self: end;
+  width: auto;
+  max-width: 72%;
+  padding: 12px 16px;
+  border-color: #c9d8cc;
+  background: #e7eee8;
+  border-bottom-right-radius: 5px;
+}
+
+.memory-message.assistant {
+  justify-self: start;
+  border-color: #d5dfc8;
+  background: #eef3e8;
+  border-bottom-left-radius: 5px;
+}
+
+.memory-message.is-loading {
+  opacity: .72;
+}
+
+.memory-message-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.memory-message-role {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.memory-message-heading small {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.memory-message > p {
+  margin: 9px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.memory-message.user > p {
+  margin: 4px 0 0;
+}
+
+.memory-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid rgba(23,79,57,.13);
+}
+
+.memory-sources > span {
+  width: 100%;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.memory-sources button {
+  max-width: 220px;
+  overflow: hidden;
+  border: 1px solid #cfdbca;
+  border-radius: 9px;
+  background: rgba(255,255,255,.7);
+  padding: 8px 10px;
+  color: var(--ink);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.memory-sources button small {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  text-overflow: ellipsis;
+}
+
+.memory-followups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.memory-followups button {
+  border: 1px solid #b9cbbd;
+  border-radius: 99px;
+  background: transparent;
+  padding: 7px 10px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.memory-followups button:hover,
+.memory-sources button:hover {
+  border-color: var(--green);
+  background: #fff;
+}
+
+#dashboard-search-form button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.graph-inspector {
+  width: min(360px, calc(100% - 36px));
+  max-height: calc(100% - 36px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-content-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.graph-content-heading small {
+  color: var(--muted);
+}
+
+.graph-content-list {
+  min-height: 0;
+  max-height: 350px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  gap: 7px;
+  padding-right: 5px;
+  overscroll-behavior: contain;
+}
+
+.graph-content-item {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  padding: 10px;
+  text-align: left;
+  color: var(--ink);
+}
+
+.graph-content-item strong,
+.graph-content-item span,
+.graph-content-item em {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.graph-content-item strong {
+  font-size: 11px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.graph-content-item span,
+.graph-content-item em {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 9px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.graph-back {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  padding: 0;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.answer-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.answer-label small {
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.answer-panel > p {
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.dhiram-reaction {
+  display: block;
+  width: min(100%, 360px);
+  max-height: 320px;
+  object-fit: contain;
+  margin: 18px auto 2px;
+  border-radius: 12px;
+}
+
+.results-summary {
+  margin: 24px 2px 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.result-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.result-heading strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.result p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  max-height: 6.3em;
+}
+
+@container (max-width: 720px) {
+  .work-row {
+    grid-template-columns: 38px minmax(0, 1fr);
+  }
+
+  .work-row > .tag,
+  .work-row > small:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    display: block;
+  }
+
+  .workspace {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .workspace > header {
+    gap: 12px;
+  }
+
+  .workspace > header .primary {
+    flex: 0 0 auto;
+  }
+
+  .memory-message,
+  .memory-message.user {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .memory-message-heading {
+    display: block;
+  }
+
+  .memory-message-heading small {
+    display: block;
+    margin-top: 4px;
+  }
+}

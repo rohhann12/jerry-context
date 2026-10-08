@@ -1,0 +1,8 @@
+data/*.sqlite*
+.env
+node_modules/
+
+slack-app/.slack/apps*.json
+slack-app/.slack/cache/
+dist/*
+slack-app/manifest.json

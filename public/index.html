@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A private, searchable memory of the work your organization does with AI.">
+  <title>Org Memory</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/connector.css">
+</head>
+<body>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <main id="auth" class="auth-shell hidden">
+    <section class="auth-story">
+      <a class="brand" href="/"><span class="brand-mark">M</span> Org Memory</a>
+      <div class="eyebrow">Your organization already knows the answer</div>
+      <h1>Turn AI work history into shared memory.</h1>
+      <p>Import approved Claude and Codex conversations. Find who solved a problem, what they built, and where the knowledge lives.</p>
+      <div class="mini-graph" aria-hidden="true">
+        <span class="orbit o1">Supply</span><span class="orbit o2">Lead scraping</span><span class="orbit o3">Dhiram</span><span class="orbit o4">Enrichment API</span>
+      </div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-tabs"><button data-auth-tab="login" class="active">Sign in</button><button data-auth-tab="create">Create workspace</button><button data-auth-tab="join">Use invite</button></div>
+      <form id="login-form" class="auth-form">
+        <h2>Welcome back</h2><p>Continue to your organization’s memory.</p>
+        <label>Workspace slug<input name="org" placeholder="flent" required></label>
+        <label>Work email<input name="email" type="email" placeholder="you@company.com" required></label>
+        <label>Password<input name="password" type="password" minlength="8" required></label>
+        <button class="primary" type="submit">Sign in <span>→</span></button>
+      </form>
+      <form id="create-form" class="auth-form hidden">
+        <h2>Create your workspace</h2><p>The first account becomes an administrator.</p>
+        <label>Organization<input name="orgName" placeholder="Flent" required></label>
+        <label>Your name<input name="name" placeholder="Rohan" required></label>
+        <label>Team<input name="team" placeholder="Leadership" required></label>
+        <label>Work email<input name="email" type="email" placeholder="you@example.com" required></label>
+        <label>Password<input name="password" type="password" minlength="8" required></label>
+        <button class="primary" type="submit">Create private workspace <span>→</span></button>
+      </form>
+      <form id="join-form" class="auth-form hidden">
+        <h2>Join your team</h2><p>Use the one-time code your admin shared with you.</p>
+        <label>Invite code<input name="invite" required></label>
+        <label>Your name<input name="name" required></label>
+        <label>Team<input name="team" placeholder="Supply" required></label>
+        <label>Invited email<input name="email" type="email" required></label>
+        <label>Password<input name="password" type="password" minlength="8" required></label>
+        <button class="primary" type="submit">Join workspace <span>→</span></button>
+      </form>
+    </section>
+  </main>
+
+  <div id="app" class="app-shell hidden">
+    <aside>
+      <a class="brand" href="#"><span class="brand-mark">M</span> Org Memory</a>
+      <nav>
+        <button class="active" data-view="overview"><span>◫</span> Overview</button>
+        <button data-view="team-context"><span>◎</span> Team context</button>
+        <button data-view="graph" data-admin><span>⌘</span> Knowledge graph</button>
+      </nav>
+      <div class="privacy-note"><span>●</span><div><strong>Private by design</strong><small>Credentials and settings never leave the machine.</small></div></div>
+      <div class="profile"><div class="avatar" id="avatar">R</div><div><strong id="profile-name"></strong><small id="profile-meta"></small></div></div>
+    </aside>
+    <main class="workspace">
+      <header><div><small id="breadcrumb">WORKSPACE / OVERVIEW</small><h2 id="page-title">Shared memory</h2></div><button id="import-button" class="primary small">＋ Import my history</button></header>
+
+      <section id="overview-view" class="view">
+        <div class="search-hero dashboard-search"><div class="eyebrow">PRIVATE MEMORY CONVERSATION</div><h1>Ask your work.</h1><p>Ask once, then follow any point deeper into the underlying Claude and Codex sessions.</p><form id="dashboard-search-form"><input id="dashboard-search-input" placeholder="What am I working on?" autocomplete="off" required><button class="primary">Ask</button></form><div id="memory-thread" class="memory-thread hidden" aria-live="polite"><div id="memory-thread-messages" class="memory-thread-messages"></div></div></div>
+        <section class="chat-history-section"><div class="chat-history-heading"><div><small>PRIVATE TO YOU</small><h3>Chat history</h3></div><button id="new-chat" type="button">＋ New chat</button></div><div id="chat-history-list" class="chat-history-list"><div class="empty-state">Your recent questions will appear here.</div></div></section>
+      </section>
+
+      <section id="team-context-view" class="view hidden">
+        <div class="section-heading team-context-heading"><div><small>PEOPLE DIRECTORY</small><h3>Team context</h3><p>Find the right person by function, role, or interests.</p></div><label class="team-context-search"><span class="hidden">Search team context</span><input id="team-context-search" type="search" placeholder="Search people, roles, or interests…"></label></div>
+        <div id="team-context-summary" class="team-context-summary" aria-live="polite"></div>
+        <div id="team-context-groups" class="team-context-groups"></div>
+      </section>
+
+      <section id="graph-view" class="view hidden">
+        <div class="section-heading graph-heading"><div><small>ADMIN VIEW</small><h3>Knowledge graph</h3><p>Explore relationships between imported work areas and projects.</p></div><div class="legend"><span class="topic-dot">Work</span><span class="project-dot">Project</span><span class="conversation-dot">Session</span></div></div>
+        <nav id="graph-navigation" class="graph-navigation" aria-label="Knowledge graph breadcrumb">
+          <button id="graph-back-top" class="graph-nav-back" type="button" disabled aria-label="Go back one graph level">← Back</button>
+          <ol id="graph-breadcrumbs"><li><span aria-current="page">Work graph</span></li></ol>
+        </nav>
+        <div class="graph-wrap"><svg id="graph" viewBox="0 0 1100 620" aria-label="Work knowledge graph"></svg><div id="graph-inspector" class="graph-inspector"><small>SELECT A NODE</small><h3>Explore relationships</h3><p>Click a work area or project to see its imported knowledge.</p></div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <dialog id="import-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><div class="eyebrow">LOCAL CONNECTOR</div><h2>Import your AI work history</h2><p>Only conversation content and project metadata are read. Auth files, tokens, settings, caches, and shell snapshots are excluded.</p><div class="source-options"><label><input type="radio" name="source" value="both" checked><span><strong>Claude + Codex</strong><small>Import both supported sources</small></span></label><label><input type="radio" name="source" value="claude"><span><strong>Claude only</strong><small>Reads project transcript JSONL files</small></span></label><label><input type="radio" name="source" value="codex"><span><strong>Codex only</strong><small>Reads the local thread databases</small></span></label></div><button id="run-import" value="default" class="primary">Import on this machine</button><div class="remote-connector"><small>IS THE DASHBOARD HOSTED ELSEWHERE?</small><p>Generate a personal connector key, then run the connector from this project on your laptop.</p><button id="connector-token" type="button">Generate connector key</button><code id="connector-command"></code></div></form></dialog>
+  <dialog id="conversation-dialog"><form method="dialog"><button class="dialog-close" value="cancel">×</button><div id="conversation-content"></div></form></dialog>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
