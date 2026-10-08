@@ -18,6 +18,48 @@ A private Node.js MVP that turns approved Codex and Claude work histories into s
 - Strict owner isolation: users can only list, open, search, and summarize their own raw conversation history; admins cannot read another member's transcripts
 - Responsive dashboard, search, conversation viewer, and interactive SVG graph
 
+## How it works
+
+**The problem.** Nobody knows what person XYZ is actually working on, and people on different teams end up building the same thing without realizing it.
+
+**The flow.** Every two hours a connector on each employee laptop pulls their Claude and Codex chat history. A privacy scan runs locally first, then an LLM classifies each chat into team, project, and person, and the result is stored as nodes and edges in a knowledge graph. A dashboard and a Slack `/context` command sit on top of that graph.
+
+```mermaid
+flowchart LR
+    subgraph ingest["Ingestion pipeline"]
+        direction TB
+        L["Employee laptops<br/>~/.claude  ~/.codex"] -- every 2 hours --> C["Connector pulls transcripts<br/>privacy scan runs locally"]
+        C --> M["LLM classifies every chat<br/>team -> project -> person"]
+        M --> E["Embed + store as<br/>nodes and edges"]
+    end
+
+    subgraph graph["Knowledge graph"]
+        direction TB
+        ORG((Org)) --> Supply((Supply))
+        ORG --> Demand((Demand))
+        ORG --> Product((Product))
+        Supply --> P1[Lead scraping]
+        Supply --> P2[Enrichment API]
+        Demand --> P3[CRM automation]
+        Product --> P4[Dashboard v2]
+        P1 --> U1([Dhiram])
+        P2 --> U2([Rohan])
+        P3 --> U3([Shubh])
+        P4 --> U4([Joel])
+        U1 --- S1{{chats}}
+        U2 --- S2{{chats}}
+        U3 --- S3{{chats}}
+        U4 --- S4{{chats}}
+    end
+
+    E ==> ORG
+    graph --> UI["Dashboard + Slack /context<br/>who is working on lead scraping?<br/>what did Dhiram ship this week?"]
+```
+
+**The graph.** The org is the root. Each team node leads to its current running projects. Each project holds the people working on it, and each person edges out to the chats they had for that work. Walking the graph answers both what someone is working on and what they have already achieved. A person who shows up under two teams is exactly the cross-team overlap the second problem is about.
+
+The full hand-drawn version is in [`docs/org-memory-overview.excalidraw`](./docs/org-memory-overview.excalidraw). Open it at [excalidraw.com](https://excalidraw.com) or with the Excalidraw VS Code extension.
+
 ## Project layout
 
 Everything is TypeScript. Node runs the `.ts` server, connector, tests and scripts directly (type stripping), so there is no compile step for the backend; `tsc` is only used for type-checking. esbuild bundles the two pieces that must ship as plain JavaScript.
@@ -31,7 +73,7 @@ src/
 public/          Static UI assets, installer script, and docs served to users
 slack-app/       Slack app manifest (+ example) and Slack CLI config
 scripts/         build.ts (esbuild bundles) and the architecture diagram generator
-docs/            Architecture diagram
+docs/            Architecture diagrams (Excalidraw)
 test/            node:test suites
 dist/            Build output (gitignored)
 data/            Local SQLite database (gitignored)
