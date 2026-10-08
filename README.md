@@ -24,41 +24,11 @@ A private Node.js MVP that turns approved Codex and Claude work histories into s
 
 **The flow.** Every two hours a connector on each employee laptop pulls their Claude and Codex chat history. A privacy scan runs locally first, then an LLM classifies each chat into team, project, and person, and the result is stored as nodes and edges in a knowledge graph. A dashboard and a Slack `/context` command sit on top of that graph.
 
-```mermaid
-flowchart LR
-    subgraph ingest["Ingestion pipeline"]
-        direction TB
-        L["Employee laptops<br/>~/.claude  ~/.codex"] -- every 2 hours --> C["Connector pulls transcripts<br/>privacy scan runs locally"]
-        C --> M["LLM classifies every chat<br/>team -> project -> person"]
-        M --> E["Embed + store as<br/>nodes and edges"]
-    end
-
-    subgraph kg["Knowledge graph"]
-        direction TB
-        ORG((Org)) --> Supply((Supply))
-        ORG --> Demand((Demand))
-        ORG --> Product((Product))
-        Supply --> P1[Lead scraping]
-        Supply --> P2[Enrichment API]
-        Demand --> P3[CRM automation]
-        Product --> P4[Dashboard v2]
-        P1 --> U1([Dhiram])
-        P2 --> U2([Rohan])
-        P3 --> U3([Shubh])
-        P4 --> U4([Joel])
-        U1 --- S1{{chats}}
-        U2 --- S2{{chats}}
-        U3 --- S3{{chats}}
-        U4 --- S4{{chats}}
-    end
-
-    E ==> ORG
-    kg --> UI["Dashboard + Slack /context<br/>who is working on lead scraping?<br/>what did Dhiram ship this week?"]
-```
+![Org Memory: problem, ingestion pipeline, and knowledge graph](./docs/org-memory-overview.png)
 
 **The graph.** The org is the root. Each team node leads to its current running projects. Each project holds the people working on it, and each person edges out to the chats they had for that work. Walking the graph answers both what someone is working on and what they have already achieved. A person who shows up under two teams is exactly the cross-team overlap the second problem is about.
 
-The full hand-drawn version is in [`docs/org-memory-overview.excalidraw`](./docs/org-memory-overview.excalidraw). Open it at [excalidraw.com](https://excalidraw.com) or with the Excalidraw VS Code extension.
+The editable source is [`docs/org-memory-overview.excalidraw`](./docs/org-memory-overview.excalidraw). Open it at [excalidraw.com](https://excalidraw.com) or with the Excalidraw VS Code extension.
 
 ## Project layout
 
