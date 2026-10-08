@@ -33,7 +33,7 @@ flowchart LR
         M --> E["Embed + store as<br/>nodes and edges"]
     end
 
-    subgraph graph["Knowledge graph"]
+    subgraph kg["Knowledge graph"]
         direction TB
         ORG((Org)) --> Supply((Supply))
         ORG --> Demand((Demand))
@@ -53,7 +53,7 @@ flowchart LR
     end
 
     E ==> ORG
-    graph --> UI["Dashboard + Slack /context<br/>who is working on lead scraping?<br/>what did Dhiram ship this week?"]
+    kg --> UI["Dashboard + Slack /context<br/>who is working on lead scraping?<br/>what did Dhiram ship this week?"]
 ```
 
 **The graph.** The org is the root. Each team node leads to its current running projects. Each project holds the people working on it, and each person edges out to the chats they had for that work. Walking the graph answers both what someone is working on and what they have already achieved. A person who shows up under two teams is exactly the cross-team overlap the second problem is about.
